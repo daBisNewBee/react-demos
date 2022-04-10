@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- react.js 是 React 的核心库 -->
+    <script src="../build/react.development.js"></script>
+    <!-- react-dom.js 是 是提供与 DOM 相关的功能 -->
+    <script src="../build/react-dom.development.js"></script>
+    <!-- Browser.js 的作用是将 JSX 语法转为 JavaScript 语法 -->
+    <script src="../build/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="example"></div>
+    <!-- "text/babel" 表示下面开始 JSX ，React独有 -->
+    <script type="text/babel">
+      // 将一个 h1 标题，插入 example 节点
+      
+      class Example1 extends React.Component {
+          // 箭头函数
+          handleClick1 = () => {
+            // 这里的“this”，指向固定！
+            console.log(this);
+            // Example1 {props: {}...}
+            // 箭头函数是this定义时的上下文。当我们点击按钮，会调用handleClick方法来处理事件，
+            // handleClick是在Example类中定义的，所以this指代Example这个类
+          }
+          // 普通函数
+          handleClick2 () {
+            // 这里的“this”，指向可变！
+            console.log(this);
+            // 为什么 输出“undefined” ?
+            // 普通函数是this执行时的上下文，点击按钮，调用handleClick来处理事件，
+            // this.handleClick中的this指向的还是这个类，因为render首先只是渲染虚假的dom树，
+            // 但当真正插入节点后，我们点击按钮，执行环境以及变成了HTML页面，this这时已经指向了button组件，所以找不到相应的函数
+          }
+          // 普通函数 + bind : 使得“this”指向Example，不再是当前运行环境，具有和箭头函数一样的效果
+          handleClick3 () {
+            console.log(this);
+            // // Example1 {props: {}...}
+          }
+          
+          render(){
+            return (
+              <div>
+                  <button onClick={this.handleClick1}> 箭头函数Click </button>
+                  <button onClick={this.handleClick2}> 普通函数Click </button>
+                  <button onClick={this.handleClick3.bind(this)}> 普通函数+bind Click </button>
+              </div>
+            );
+          }
+      }
+
+      ReactDOM.render(
+        <Example1 />,
+        document.getElementById('example')
+      );
+    </script>
+  </body>
+</html>
