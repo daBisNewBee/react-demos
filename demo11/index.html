@@ -19,17 +19,22 @@
           }
         }
 
+        // 组件的数据来源，通常是通过 Ajax 请求从服务器获取
         componentDidMount() {
+          console.log("componentDidMount");
+          // 使用 jQuery 完成 Ajax 请求，这是为了便于说明。React 本身没有任何依赖，完全可以不用jQuery，而使用其他库
           $.get(this.props.source, function(result) {
             var lastGist = result[0];
             this.setState({
               username: lastGist.owner.login,
-              lastGistUrl: lastGist.html_url
+              lastGistUrl: lastGist.html_url,
             });
           }.bind(this));
         }
 
         render() {
+          console.log(this.state.username);
+          console.log(this.state.lastGistUrl);
           return (
             <div>
               {this.state.username}'s last gist is <a href={this.state.lastGistUrl}>here</a>.

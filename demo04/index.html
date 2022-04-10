@@ -9,14 +9,29 @@
   <body>
     <div id="example"></div>
     <script type="text/babel">
+      // 组件类：React 允许将代码封装成组件（component），然后像插入普通 HTML 标签一样，在网页中插入这个组件
       class HelloMessage extends React.Component {
+        // 组件类都必须有自己的 render 方法，用于输出组件
         render() {
-          return <h1>Hello {this.props.name}</h1>;
+          // 组件类只能包含一个顶层标签
+          return <h1>Hello {this.props.name}</h1>
+           // 获取组件属性 this.props
         }
       }
 
+      class MyComponent extends React.Component {
+          render() {
+            return <div> 
+                    <h1> MyComponent 111 </h1>
+                    <h1> MyComponent 222 </h1>
+                  </div>
+          }
+      }
+
       ReactDOM.render(
-        <HelloMessage name="John" />,
+        // 组件的用法与原生的 HTML 标签完全一致，可以任意加入属性
+        // <HelloMessage name="John" />,
+        <MyComponent name="Mike" />,
         document.getElementById('example')
       );
     </script>

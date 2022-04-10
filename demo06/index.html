@@ -11,10 +11,12 @@
     <div id="example"></div>
     <script type="text/babel">
 
-      var data = 123;
+      var data = "123";
 
       class MyTitle extends React.Component {
         static propTypes = {
+          // 一种机制，验证别人使用组件时，提供的参数是否符合要求。
+          // 比如这里，告诉 React，这个 title 属性是必须的，而且它的值必须是字符串。
           title: PropTypes.string.isRequired,
         }
         render() {

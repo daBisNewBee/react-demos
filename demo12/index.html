@@ -28,13 +28,19 @@
 
         render() {
           if (this.state.loading) {
+            console.log("加载中");
+            // 加载中
             return <span>Loading...</span>;
           }
           else if (this.state.error !== null) {
+            console.log("加载失败");
+            // 加载失败
             return <span>Error: {this.state.error.message}</span>;
           }
           else {
+            // 加载成功
             var repos = this.state.data.items;
+            console.log("加载成功 ");
             var repoList = repos.map(function (repo, index) {
               return (
                 <li key={index}><a href={repo.html_url}>{repo.name}</a> ({repo.stargazers_count} stars) <br/> {repo.description}</li>
@@ -50,6 +56,7 @@
         }
       }
 
+      //  对比Ajax的处理：我们甚至可以把一个Promise对象传入组件。
       ReactDOM.render(
         <RepoList promise={$.getJSON('https://api.github.com/search/repositories?q=javascript&sort=stars')} />,
         document.getElementById('example')

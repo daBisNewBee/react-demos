@@ -13,17 +13,24 @@
       class MyComponent extends React.Component {
         constructor(props) {
           super(props);
-          this.myTextInput = React.createRef();
+          this.aaaaa = React.createRef();
+          console.log("myTextInput = " + this.aaaaa)
           this.handleClick = this.handleClick.bind(this)
         }
         handleClick() {
-          this.myTextInput.current.focus();
+          // 由于"this.aaa.cur" 获取的是真实DOM，所以必须等到虚拟DOM插入文档以后，才能使用这个属性。
+          // 而click事件的回调函数发生在真实DOM发生click事件之后，所以合理安全
+          this.aaaaa.current.focus();
         }
         render() {
           return (
+            /*
+              为什么要定义“ref={this.aaaaa}”？
+              为了获取真实的DOM节点
+            */
             <div>
-              <input type="text" ref={this.myTextInput} />
-              <input type="button" value="Focus the text input" onClick={this.handleClick} />
+              <input type="text" ref={this.aaaaa} />
+              <input type="button" value="Focus the text input" onClick={this.handleClick}/>
             </div>
           );
         }

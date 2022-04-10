@@ -9,6 +9,7 @@
   <body>
     <div id="example"></div>
     <script type="text/babel">
+      // 表单
       class Input extends React.Component {
         constructor(props) {
           super(props)
@@ -21,7 +22,9 @@
           this.setState({ value: event.target.value });
         }
         render() {
+          // 用户在表单填入的内容，属于用户跟组件的互动，所以不能用 this.props 读取
           var value = this.state.value;
+          console.log("render, new value = " + value)
           return (
             <div>
               <input type="text" value={value} onChange={this.handleChange} />
@@ -30,8 +33,41 @@
           );
         }
       }
+
+      class NameForm extends React.Component {
+          constructor(props){
+            super(props);
+            this.state = {value: ''};
+            this.handleChange = this.handleChange.bind(this);
+            this.handleSubmit = this.handleSubmit.bind(this);
+          }
+
+          handleChange(event) {
+            this.setState({value: event.target.value});
+          }
+
+          handleSubmit(event) {
+            alert('A name was submitted: ' + this.state.value);
+            event.preventDefault(); // 防止被重置
+          }
+
+          render() {
+            return (
+              <form onSubmit={this.handleSubmit}>
+                <label>
+                  Name:
+                  <input type="text" value={this.state.value} onChange={this.handleChange}/>
+                </label>
+                  <input type="submit" value="提交"/>  
+              </form>
+            );
+          }
+      }
         
-      ReactDOM.render(<Input/>, document.getElementById('example'));
+      ReactDOM.render(
+        <NameForm/>, 
+        // <Input/>, 
+        document.getElementById('example'));
     </script>
   </body>
 </html>

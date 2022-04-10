@@ -17,9 +17,34 @@
           };
         }
 
+        // 组件的生命周期 的 三个状态：
+        // Mount：已插入真实 DOM
+        // Update：正在被重新渲染
+        // Unmount：已移出真实 DOM
+
+        componentWillUnmount() {
+          console.log("componentWillUnmount");
+        }
+
+        // will 函数在进入状态之前调用
+        // did 函数在进入状态之后调用
+        componentDidUpdate() {
+          console.log("componentDidUpdate");
+        }
+
+        componentWillUpdate() {
+          console.log("componentWillUpdate");
+        }
+
+        componentWillMount() {
+          console.log("componentWillMount");
+        }
+
         componentDidMount() {
+          console.log("componentDidMount");
           this.timer = setInterval(function () {
             var opacity = this.state.opacity;
+            console.log("opacity = " + opacity);
             opacity -= .05;
             if (opacity < 0.1) {
               opacity = 1.0;
@@ -30,8 +55,21 @@
           }.bind(this), 100);
         }
 
+        // 已加载组件收到新的参数时调用
+        componentWillReceiveProps(){
+          console.log("componentWillReceiveProps");
+        }
+
+        // 组件判断是否重新渲染时调用
+        shouldComponentUpdate(){
+          console.log("shouldComponentUpdate");
+          return true; // 这里false后，就不会回调 componentWillUpdate/componentDidUpdate
+        }
+
         render() {
           return (
+            // 为什么要 两对大括号？
+            // 这是因为 React 组件样式是一个对象，所以第一重大括号表示这是 JavaScript 语法，第二重大括号表示样式对象
             <div style={{opacity: this.state.opacity}}>
               Hello {this.props.name}
             </div>
